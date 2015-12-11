@@ -1,0 +1,44 @@
+<resources>
+    <!-- inherit from the material theme -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Main theme colors -->
+        <!--   your app branding color for the app bar -->
+        <item name="android:colorPrimary">@color/blue</item>
+        <!--   darker variant for the status bar and contextual app bars -->
+        <item name="android:colorPrimaryDark">@color/darkblue</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="android:colorAccent">@color/dark</item>
+        <item name="colorPrimary">@color/darkblue</item>
+        <item name="colorPrimaryDark">@color/darkblue</item>
+        <item name="colorAccent">@color/blue</item>
+        <item name="android:colorBackground">@color/background_material_light</item>
+    </style>
+
+    <style name="VoloNewTheme" parent="Theme.AppCompat.NoActionBar" >
+        <item name="colorAccent">@color/blue</item>
+        <item name="android:navigationBarColor">@color/darkblue</item>
+        <item name="android:statusBarColor">@color/dark</item>
+        <item name="android:textColorPrimary">@color/dark</item>
+    </style>
+
+    <style name="HeyVolo" parent="Theme.AppCompat.NoActionBar" >
+        <item name="colorAccent">@color/blue</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorPrimaryInverse">@color/dark</item>
+        <item name="android:statusBarColor">@color/darkblue</item>
+        <item name="android:navigationBarColor">@color/dark</item>
+
+
+    </style>
+
+    <style name="Button">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:minWidth">88dp</item>
+        <item name="android:minHeight">36dp</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:elevation">1dp</item>
+        <item name="android:translationZ">1dp</item>
+        <item name="android:background">@drawable/primary_round</item>
+    </style>
+</resources>
