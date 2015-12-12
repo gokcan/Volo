@@ -32,11 +32,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:src="@drawable/ic_account_circle_140dp"
-            android:tint="@color/grey"
+            android:tint="@color/white"
+            android:src="@drawable/ic_account_child_120dp"
             android:layout_below="@id/textWelcome"
             android:layout_centerVertical="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            />
+
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textClock"
+            android:layout_below="@+id/logo"
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 
@@ -119,6 +127,30 @@
         android:layout_toRightOf="@+id/textPassword"
         android:layout_toEndOf="@+id/textPassword" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-</LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Terms &amp; Conditions"
+            android:id="@+id/textView"
+            android:textSize="10dp"
+            android:textIsSelectable="false"
+            android:enabled="true"
+
+            android:textColor="@color/grey"
+            android:layout_gravity="center_horizontal" />
+
+
+
+    </LinearLayout>
+
+
 </LinearLayout>
