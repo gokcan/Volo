@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity  {
 
     public boolean validatePassword(String pass) {
 
-        if (pass.length() < 6 || pass.length() > 12) {
+        if (pass.length() < 6 || pass.length() > 12 || !pass.contains("-") {
             passLen = pass.length();
             return false;
         }
