@@ -1,10 +1,23 @@
 package com.example.skylife.parsedb;
 
+/*
+
+||v1.0||
+||Author: Gökcan DEĞİRMENCİ||
+||For detailed information please visit https://gokcan.degirmenci.me ||
+||@Skylifee7||
+
+ */
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/*
+This class deprecated! IT IS ONLY A TEST CLASS.
+NOT USE IT ANYWHERE !
+ */
 
 public class HomeActivity extends AppCompatActivity {
 

@@ -1,6 +1,13 @@
 package com.example.skylife.parsedb;
 
-//@ Author and Hacker: Gökcan DEĞİRMENCİ @Skylifee7
+/*
+
+||v1.0||
+||Author: Gökcan DEĞİRMENCİ||
+||For detailed information please visit https://gokcan.degirmenci.me ||
+||@Skylifee7||
+
+ */
 
 //Signup Activity
 
@@ -35,6 +42,9 @@ public class MainActivity extends AppCompatActivity  {
     public boolean emailVerified = false;
     public int passLen;
 
+    /*
+     Custom email address pattern to correctly validate emails.
+     */
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$";
     private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
     private Matcher matcher;
@@ -89,13 +99,13 @@ public class MainActivity extends AppCompatActivity  {
 
                     user.setEmail(email);
                     /*
-                    Use that in LoginActivity
+                    Use that in LoginActivity ..
 
                     user = ParseUser.getCurrentUser();
                     Boolean isVerified = user.getBoolean("emailVerified");
                     */
 
-                    // other fields can be set just like with ParseObject
+
 
                     user.signUpInBackground(new SignUpCallback() {
                         public void done(ParseException e) {
@@ -111,7 +121,9 @@ public class MainActivity extends AppCompatActivity  {
                                 Toast.makeText(MainActivity.this, "Success! Welcome to Volo! ", Toast.LENGTH_SHORT).show();
                                 Toast.makeText(MainActivity.this, "Please verify your Email! ", Toast.LENGTH_SHORT).show();
 
-
+                                /*
+                                Lets take user Signup screen to our NavigationActivity
+                                 */
                                 Intent takeUserHome = new Intent(MainActivity.this, NavigationActivity.class);
                                 overridePendingTransition(R.anim.abc_grow_fade_in_from_bottom, R.anim.abc_grow_fade_in_from_bottom);
                                 startActivity(takeUserHome);
@@ -142,9 +154,9 @@ public class MainActivity extends AppCompatActivity  {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        /* Handle action bar item clicks here. The action bar will
+         automatically handle clicks on the Home/Up button
+        */
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -155,6 +167,9 @@ public class MainActivity extends AppCompatActivity  {
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+    Custom Hidekeyboard method. Because Android SDK does not provide that method.
+     */
     protected void hideKeyboard() {
         View view = getCurrentFocus();
         if (view != null) {
@@ -163,6 +178,10 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
+    /*
+    This password validation may be expanded.
+    .contains() method used for anti-SQL Injection .
+     */
     public boolean validatePassword(String pass) {
 
         if (pass.length() < 6 || pass.length() > 12 || pass.contains("'")) {
@@ -179,6 +198,9 @@ public class MainActivity extends AppCompatActivity  {
         return matcher.matches();
     }
 
+    /*
+    Custom Material animation
+     */
     private void setupWindowAnimations() {
         Slide slide = new Slide();
         slide.setDuration(1000);

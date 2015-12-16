@@ -1,5 +1,14 @@
 package com.example.skylife.parsedb;
 
+/*
+
+||v1.0||
+||Author: Gökcan DEĞİRMENCİ||
+||For detailed information please visit https://gokcan.degirmenci.me ||
+||@Skylifee7||
+
+ */
+
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -16,9 +25,12 @@ public class ScrollingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scrolling);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        /*
+        Pretty cool Lollipop layout used for this parallax effect.
+        CoordinatorLayout provides great UI components to use :)
+         */
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolBarLayout.setTitle(getTitle());
-
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

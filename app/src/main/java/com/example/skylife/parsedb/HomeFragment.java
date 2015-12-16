@@ -1,5 +1,14 @@
 package com.example.skylife.parsedb;
 
+/*
+
+||v1.0||
+||Author: Gökcan DEĞİRMENCİ||
+||For detailed information please visit https://gokcan.degirmenci.me ||
+||@Skylifee7||
+
+ */
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,13 +23,15 @@ import com.parse.ParseUser;
 
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+    /*
+    Initiliazing the params and our view.
+     */
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
     View view;
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -52,6 +63,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        /*
+        FloatingAB used for material design guidelines.
+        We listen for clicks but in this version user can click many times we need to
+        implement opposite button reaction like " Participate " and " Not Participate " state changes.
+         */
         view = inflater.inflate(R.layout.fragment_home, container, false);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(this);
@@ -61,7 +78,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        //do what you want to do when button is clicked
+        /*Event participation button logic.
+        But it needs to be changed with proper one.
+        It is a just a placeholder for event participation counter problem.
+         */
+
         ParseObject eventsPrt = new ParseObject("eventsPrt");
         eventsPrt.put("eventsPrt", ParseUser.getCurrentUser());
         ParseUser.getCurrentUser().put("eventsPrt", 1);
@@ -80,37 +101,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-/*
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-*/
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

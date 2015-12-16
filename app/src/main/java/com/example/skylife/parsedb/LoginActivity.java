@@ -1,5 +1,14 @@
 package com.example.skylife.parsedb;
 
+/*
+
+||v1.0||
+||Author: Gökcan DEĞİRMENCİ||
+||For detailed information please visit https://gokcan.degirmenci.me ||
+||@Skylifee7||
+
+ */
+
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -31,6 +40,9 @@ public class LoginActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        /*
+        Simple usage of Mediaplayer, it uses pre-defined audio effect. ∂
+         */
         mp = MediaPlayer.create(getApplicationContext(), R.raw.pad_confirm);
 
         Parse.enableLocalDatastore(this);
@@ -53,6 +65,11 @@ public class LoginActivity extends AppCompatActivity{
                 String username = mUsername.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
 
+                /*
+                This part is the coolest snippet of our LoginActivity .
+                Snackbar raises text just after the login. We welcome our users with their name and cat emoji :)
+                Cool, huh ?
+                 */
                 final Snackbar snackbar = Snackbar
                         .make(v, "Nice to see you " + username + " \uD83D\uDE3B ", Snackbar.LENGTH_LONG)
                         .setAction("action", null);
@@ -62,15 +79,19 @@ public class LoginActivity extends AppCompatActivity{
                 /*dwdjkndcjnejkncekjcnkjencjkenjkcnjencfjkencf
                 feferferfeferfeferfe
                 rfefrerferferferferferf
-                referfefrbhhlvllvgugvj
+                referfefrbhhlvllvgugvj Used for some delay. We cannot use Thread.sleep() method.
                  */
                 ParseUser.logInInBackground(username, password, new LogInCallback() {
 
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {
 
-                            // Hooray! The user is logged in
+                            // Hooray! The user is logged in!
 
+                            /*
+                            The mediaplayer instance starts playing before the Intent. Because
+                            of the synchronisation problems.
+                             */
                             if (mp.isPlaying()) {
                                 mp.stop();
                                 mp.release();
@@ -96,6 +117,9 @@ public class LoginActivity extends AppCompatActivity{
 
                 Intent takeUserSignup = new Intent(LoginActivity.this, MainActivity.class);
 
+                /*
+                Custom animation on bridge between Login to Signup pages.
+                 */
                 startActivity(takeUserSignup);
                 overridePendingTransition(R.anim.abc_grow_fade_in_from_bottom, R.anim.abc_grow_fade_in_from_bottom);
             }
