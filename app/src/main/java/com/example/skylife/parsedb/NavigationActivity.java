@@ -105,12 +105,23 @@ public class NavigationActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_lastevent) {
 
+            String mTitle ="Last Event";
+            actionBar.setTitle(mTitle);
 
         } else if (id == R.id.nav_userprofile) {
 
+            String mTitle = "Profile";
+            actionBar.setTitle(mTitle);
+
         } else if (id == R.id.nav_settings) {
 
+            String mTitle = "Settings";
+            actionBar.setTitle(mTitle);
+
         } else if (id == R.id.nav_security) {
+
+            String mTitle = "Security Meausures";
+            actionBar.setTitle(mTitle);
 
         }
 
