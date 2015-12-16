@@ -17,7 +17,7 @@ import android.view.MenuItem;
 
 ||v1.0||
 ||Author: Gökcan DEĞİRMENCİ||
-||For detailed information please visit https://gokcan.degirmenci.me ||
+||For detailed information please visit http://gokcan.degirmenci.me ||
 ||@Skylifee7||
 
  */
