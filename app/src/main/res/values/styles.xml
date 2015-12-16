@@ -14,18 +14,18 @@
         <item name="android:colorBackground">@color/background_material_light</item>
     </style>
 
-    <style name="VoloNewTheme" parent="Theme.AppCompat.NoActionBar" >
+    <style name="VoloNewTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorAccent">@color/blue</item>
         <item name="android:navigationBarColor">@color/darkblue</item>
         <item name="android:statusBarColor">@color/dark</item>
         <item name="android:textColorPrimary">@color/dark</item>
     </style>
 
-    <style name="HeyVolo" parent="Theme.AppCompat.NoActionBar" >
+    <style name="HeyVolo" parent="Theme.AppCompat.NoActionBar">
         <item name="colorAccent">@color/blue</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/dark</item>
-        <item name="android:statusBarColor">@color/darkblue</item>
+        <item name="android:statusBarColor">@color/darkerblue</item>
         <item name="android:navigationBarColor">@color/dark</item>
 
 
@@ -41,4 +41,8 @@
         <item name="android:translationZ">1dp</item>
         <item name="android:background">@drawable/primary_round</item>
     </style>
+
+    <style name="HeyVolo.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="HeyVolo.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

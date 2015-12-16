@@ -65,7 +65,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textVisiblePassword|textNoSuggestions"
-                android:hint="Username"/>
+                android:hint="Username"
+                android:ems="10"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -74,7 +75,8 @@
         <android.support.design.widget.TextInputLayout
             android:id="@+id/emailWrapper"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <EditText
                 android:id="@+id/textEmail"
@@ -82,7 +84,8 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:hint="Email Address"
-                android:layout_below="@id/usernameWrapper"/>
+                android:layout_below="@id/usernameWrapper"
+                android:ems="10"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -98,7 +101,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Password"/>
+                android:hint="Password"
+                android:ems="10"/>
 
         </android.support.design.widget.TextInputLayout>
     

@@ -1,11 +1,16 @@
 package com.example.skylife.parsedb;
 
-//@ Author and Hacker: @Skylifee7
+//@ Author and Hacker: Gökcan DEĞİRMENCİ @Skylifee7
+
+//Signup Activity
 
 import android.content.Context;
+import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Slide;
 import android.view.HapticFeedbackConstants;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,7 +20,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -35,26 +39,27 @@ public class MainActivity extends AppCompatActivity  {
     private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
     private Matcher matcher;
 
+    public MediaPlayer mp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setupWindowAnimations();
+
+        mp = MediaPlayer.create(getApplicationContext(), R.raw.pad_confirm);
+
         final TextInputLayout emailWrapper = (TextInputLayout) findViewById(R.id.emailWrapper);
         final TextInputLayout passwordWrapper = (TextInputLayout) findViewById(R.id.passwordWrapper);
 
-
-        Parse.initialize(this, "wZJ1Nx8n1wxsmED2LQQ7C4xtkbvSBlb26qzP4LPt", "5vEXptj6DwN5c2O9aqOCzAfnEKaPQfxJubB7yLpu");
-        ParseInstallation.getCurrentInstallation().saveInBackground();
 
         mUsername = (EditText) findViewById(R.id.textUsername);
 
         mEmail = (EditText) findViewById(R.id.textEmail);
         mPassword = (EditText) findViewById(R.id.textPassword);
         mRegisterButton = (Button) findViewById(R.id.buttonRegister);
-
-
 
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +77,7 @@ public class MainActivity extends AppCompatActivity  {
                     emailWrapper.setError("Not a valid email address!");
                 } else if (!validatePassword(password)) {
                     mPassword.setError("");
-                    passwordWrapper.setError(" Password lengh "+ passLen + " is out of boundries of 6-12");
+                    passwordWrapper.setError(" Password lengh " + passLen + " is out of boundries of 6-12");
                 } else {
                     emailWrapper.setErrorEnabled(false);
                     passwordWrapper.setErrorEnabled(false);
@@ -83,15 +88,35 @@ public class MainActivity extends AppCompatActivity  {
                     user.setPassword(password);
 
                     user.setEmail(email);
+                    /*
+                    Use that in LoginActivity
+
+                    user = ParseUser.getCurrentUser();
+                    Boolean isVerified = user.getBoolean("emailVerified");
+                    */
 
                     // other fields can be set just like with ParseObject
 
                     user.signUpInBackground(new SignUpCallback() {
                         public void done(ParseException e) {
                             if (e == null) {
+
+                                if (mp.isPlaying()) {
+                                    mp.stop();
+                                    mp.release();
+                                    mp = MediaPlayer.create(getApplicationContext(), R.raw.pad_confirm);
+                                }
+                                mp.start();
+
                                 Toast.makeText(MainActivity.this, "Success! Welcome to Volo! ", Toast.LENGTH_SHORT).show();
-                                //Intent takeUserHome = new Intent(this, HomeActivity.class);
-                                // startActivity(takeUserHome);
+                                Toast.makeText(MainActivity.this, "Please verify your Email! ", Toast.LENGTH_SHORT).show();
+
+
+                                Intent takeUserHome = new Intent(MainActivity.this, NavigationActivity.class);
+                                overridePendingTransition(R.anim.abc_grow_fade_in_from_bottom, R.anim.abc_grow_fade_in_from_bottom);
+                                startActivity(takeUserHome);
+
+
 
                             } else {
                                 Toast.makeText(MainActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
@@ -99,10 +124,13 @@ public class MainActivity extends AppCompatActivity  {
                             }
                         }
                     });
+
                 }
             }
 
         });
+
+
     }
 
     @Override
@@ -127,7 +155,7 @@ public class MainActivity extends AppCompatActivity  {
         return super.onOptionsItemSelected(item);
     }
 
-    private void hideKeyboard() {
+    protected void hideKeyboard() {
         View view = getCurrentFocus();
         if (view != null) {
             ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).
@@ -137,7 +165,8 @@ public class MainActivity extends AppCompatActivity  {
 
     public boolean validatePassword(String pass) {
 
-        if (pass.length() < 6 || pass.length() > 12 || !pass.contains("-") {
+        if (pass.length() < 6 || pass.length() > 12 || pass.contains("'")) {
+
             passLen = pass.length();
             return false;
         }
@@ -149,5 +178,12 @@ public class MainActivity extends AppCompatActivity  {
         matcher = pattern.matcher(email);
         return matcher.matches();
     }
+
+    private void setupWindowAnimations() {
+        Slide slide = new Slide();
+        slide.setDuration(1000);
+        getWindow().setExitTransition(slide);
+    }
+
 
 }
