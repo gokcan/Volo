@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 /*
 
@@ -22,7 +23,7 @@ import android.view.MenuItem;
 
  */
 
-public class NavigationActivity extends AppCompatActivity
+public class MainNavActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
@@ -31,6 +32,9 @@ public class NavigationActivity extends AppCompatActivity
         setContentView(R.layout.activity_navigation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        RandomFacts facts = new RandomFacts();
+        String fact = facts.getFact();
 
         /*
         Initiliase the layouts.
@@ -44,6 +48,7 @@ public class NavigationActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Toast.makeText(MainNavActivity.this, fact , Toast.LENGTH_LONG).show();
 
     }
 
@@ -74,7 +79,7 @@ public class NavigationActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            Intent takeUserSettings = new Intent(NavigationActivity.this, ScrollingActivity.class);
+            Intent takeUserSettings = new Intent(MainNavActivity.this, TermsActivity.class);
             startActivity(takeUserSettings);
             return true;
         }
@@ -92,21 +97,27 @@ public class NavigationActivity extends AppCompatActivity
           */
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
+
+
+
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
 
-            HomeFragment homeFragment = new HomeFragment();
-            fragmentTransaction.replace(R.id.navcontent, homeFragment, "HOME_FRAGMENT");
-            fragmentTransaction.commit();
             String mTitle = "Home";
-
             actionBar.setTitle(mTitle);
+
 
         } else if (id == R.id.nav_lastevent) {
 
+            EventFragment eventFragment = new EventFragment();
+            fragmentTransaction.replace(R.id.navcontent, eventFragment, "HOME_FRAGMENT");
+            fragmentTransaction.commit();
+
             String mTitle ="Last Event";
             actionBar.setTitle(mTitle);
+
+
 
         } else if (id == R.id.nav_userprofile) {
 

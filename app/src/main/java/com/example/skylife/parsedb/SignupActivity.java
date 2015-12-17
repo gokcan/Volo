@@ -34,7 +34,7 @@ import com.parse.SignUpCallback;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainActivity extends AppCompatActivity  {
+public class SignupActivity extends AppCompatActivity  {
 
     protected EditText mUsername,mEmail,mPassword;
     protected Button mRegisterButton;
@@ -118,20 +118,20 @@ public class MainActivity extends AppCompatActivity  {
                                 }
                                 mp.start();
 
-                                Toast.makeText(MainActivity.this, "Success! Welcome to Volo! ", Toast.LENGTH_SHORT).show();
-                                Toast.makeText(MainActivity.this, "Please verify your Email! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, "Success! Welcome to Volo! ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, "Please verify your Email! ", Toast.LENGTH_SHORT).show();
 
                                 /*
-                                Lets take user Signup screen to our NavigationActivity
+                                Lets take user Signup screen to our MainNavActivity
                                  */
-                                Intent takeUserHome = new Intent(MainActivity.this, NavigationActivity.class);
+                                Intent takeUserHome = new Intent(SignupActivity.this, MainNavActivity.class);
                                 overridePendingTransition(R.anim.abc_grow_fade_in_from_bottom, R.anim.abc_grow_fade_in_from_bottom);
                                 startActivity(takeUserHome);
 
 
 
                             } else {
-                                Toast.makeText(MainActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignupActivity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
 
                             }
                         }

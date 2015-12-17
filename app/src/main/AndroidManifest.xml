@@ -24,17 +24,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".SignupActivity"
             android:label="MainActivity" />
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home" />
         <activity
-            android:name=".ScrollingActivity"
+            android:name=".TermsActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/HeyVolo" />
         <activity
-            android:name=".NavigationActivity"
+            android:name=".MainNavActivity"
             android:label="NavigationActivity"
             android:theme="@style/HeyVolo" />
     </application>

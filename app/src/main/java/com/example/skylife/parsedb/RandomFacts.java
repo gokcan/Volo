@@ -10,10 +10,10 @@ import java.util.Random;
 
  */
 
-public class RandomMessages {
+public class RandomFacts {
 
     // Member variables (properties about the object)
-    String[] mFacts = {
+    private String[] mFacts = {
             "Facebook, Skype and Twitter are all banned in China.",
             "An apple, potato, and onion all taste the same if you eat them with your nose plugged..",
             "In England, in the 1880’s, “Pants” was considered a dirty word.",

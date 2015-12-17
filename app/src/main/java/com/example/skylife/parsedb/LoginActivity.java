@@ -49,6 +49,10 @@ public class LoginActivity extends AppCompatActivity{
         Parse.initialize(this, "wZJ1Nx8n1wxsmED2LQQ7C4xtkbvSBlb26qzP4LPt", "5vEXptj6DwN5c2O9aqOCzAfnEKaPQfxJubB7yLpu");
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
+        ParseUser.getCurrentUser().put("eventA", false);
+        ParseUser.getCurrentUser().put("eventsParticipated", 0);
+        ParseUser.getCurrentUser().saveInBackground();
+
         mUsername = (EditText) findViewById(R.id.textUsername1);
 
         mPassword = (EditText) findViewById(R.id.textPassword1);
@@ -98,7 +102,7 @@ public class LoginActivity extends AppCompatActivity{
                                 mp = MediaPlayer.create(getApplicationContext(), R.raw.pad_confirm);
                             }
                             mp.start();
-                            Intent takeUserHome = new Intent(LoginActivity.this, NavigationActivity.class);
+                            Intent takeUserHome = new Intent(LoginActivity.this, MainNavActivity.class);
                             startActivity(takeUserHome);
 
                         } else {
@@ -115,7 +119,7 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                Intent takeUserSignup = new Intent(LoginActivity.this, MainActivity.class);
+                Intent takeUserSignup = new Intent(LoginActivity.this, SignupActivity.class);
 
                 /*
                 Custom animation on bridge between Login to Signup pages.

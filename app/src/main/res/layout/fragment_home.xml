@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.example.skylife.parsedb.ScrollingActivity">
+    tools:context=".TermsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -38,7 +38,7 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_scrolling" />
+    <include layout="@layout/content_event" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -46,7 +46,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_assignment_turned_in_24dp"
-        android:tint="@color/grey"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end" />
 
