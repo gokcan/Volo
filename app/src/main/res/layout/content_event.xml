@@ -1,0 +1,26 @@
+
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context=".TermsActivity"
+        tools:showIn="@layout/activity_scrolling">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:text="
+     Lift up a child's voice ~ a child's life.
+     Become a Court Appointed Special Advocate.
+
+    A new case of child abuse or neglect enters the Fairfax County Domestic  Juvenile Relations Court system once every 38 hours. These children need dedicated, caring advocates to help ensure that their best interests are represented in court.
+That's where Court Appointed Special Advocates, or CASA volunteers, enter the picture. CASA volunteers investigate a child's situation and speak for the best interests of the child. Volunteers visit the children on their cases twice a month and interview social workers, therapists, teachers and other professionals, all the while gathering information to report to court. Volunteers receive extensive training and are supervised by a professional staff.
+The CASA volunteer is often the one consistent adult in these children's lives, helping protect their fundamental right to be safe, to be treated with dignity, and to learn and grow within a nurturing family.
+Attend an upcoming Fairfax CASA Information Session and learn more:
+                           Wednesday, December 9th" />
+
+    </android.support.v4.widget.NestedScrollView>
