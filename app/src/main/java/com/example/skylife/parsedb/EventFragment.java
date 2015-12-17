@@ -78,7 +78,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
         implement opposite button reaction like " Participate " and " Not Participate " state changes.
          */
 
-        view = inflater.inflate(R.layout.fragment_home, container, false);
+        view = inflater.inflate(R.layout.fragment_event, container, false);
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(this);
 

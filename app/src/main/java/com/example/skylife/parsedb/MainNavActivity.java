@@ -33,8 +33,10 @@ public class MainNavActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        RandomFacts facts = new RandomFacts();
-        String fact = facts.getFact();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        EventFragment eventFragment = new EventFragment();
+        fragmentTransaction.replace(R.id.navcontent, eventFragment, "HOME_FRAGMENT");
+        fragmentTransaction.commit();
 
         /*
         Initiliase the layouts.
@@ -48,7 +50,11 @@ public class MainNavActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Toast.makeText(MainNavActivity.this, fact , Toast.LENGTH_LONG).show();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(true);
+        String mTitle = "Home";
+        actionBar.setTitle(mTitle);
+
 
     }
 
@@ -95,9 +101,9 @@ public class MainNavActivity extends AppCompatActivity
          Handle navigation view item clicks here and also
           handle the Fragment Transactions . @Skylifee7
           */
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
-
 
 
         int id = item.getItemId();
@@ -118,7 +124,6 @@ public class MainNavActivity extends AppCompatActivity
             actionBar.setTitle(mTitle);
 
 
-
         } else if (id == R.id.nav_userprofile) {
 
             String mTitle = "Profile";
@@ -131,7 +136,10 @@ public class MainNavActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_security) {
 
-            String mTitle = "Security Meausures";
+            RandomFacts facts = new RandomFacts();
+            String fact = facts.getFact();
+            Toast.makeText(MainNavActivity.this, fact, Toast.LENGTH_LONG).show();
+            String mTitle = "Random Facts";
             actionBar.setTitle(mTitle);
 
         }
