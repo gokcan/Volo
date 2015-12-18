@@ -22,9 +22,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.LogInCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
-import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 
@@ -44,14 +42,6 @@ public class LoginActivity extends AppCompatActivity{
         Simple usage of Mediaplayer, it uses pre-defined audio effect. ∂
          */
         mp = MediaPlayer.create(getApplicationContext(), R.raw.pad_confirm);
-
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "wZJ1Nx8n1wxsmED2LQQ7C4xtkbvSBlb26qzP4LPt", "5vEXptj6DwN5c2O9aqOCzAfnEKaPQfxJubB7yLpu");
-        ParseInstallation.getCurrentInstallation().saveInBackground();
-
-        ParseUser.getCurrentUser().put("eventA", false);
-        ParseUser.getCurrentUser().put("eventsParticipated", 0);
-        ParseUser.getCurrentUser().saveInBackground();
 
         mUsername = (EditText) findViewById(R.id.textUsername1);
 
