@@ -101,7 +101,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
             if (!ParseUser.getCurrentUser().getBoolean("eventA")) {
 
-                ParseUser.getCurrentUser().increment("eventsParticipated");
+                ParseUser.getCurrentUser().increment("eventsParticipated", (-1));
                 ParseUser.getCurrentUser().put("eventA", true);
             }
 
@@ -118,7 +118,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
             Snackbar.make(view, "You joined that event!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 
-            ParseUser.getCurrentUser().increment("eventsParticipated", (-1));
+            ParseUser.getCurrentUser().increment("eventsParticipated", (+1));
             ParseUser.getCurrentUser().put("eventA", false);
 
             ParseUser.getCurrentUser().saveInBackground();
