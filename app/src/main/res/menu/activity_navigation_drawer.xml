@@ -28,6 +28,12 @@
                 android:title="Secure"
                 />
 
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_settings_power_24dp"
+                android:title="Log Out"
+                />
+
         </menu>
     </item>
 

@@ -33,6 +33,7 @@ public class MainNavActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         EventFragment eventFragment = new EventFragment();
         fragmentTransaction.replace(R.id.navcontent, eventFragment, "HOME_FRAGMENT");
@@ -110,6 +111,11 @@ public class MainNavActivity extends AppCompatActivity
 
         if (id == R.id.nav_home) {
 
+            HomeFragment homeFragment = new HomeFragment();
+            fragmentTransaction.replace(R.id.navcontent, homeFragment, "HOME_FRAGMENT");
+            fragmentTransaction.commit();
+
+
             String mTitle = "Home";
             actionBar.setTitle(mTitle);
 
@@ -126,13 +132,21 @@ public class MainNavActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_userprofile) {
 
+            ProfileFragment profileFragment = new ProfileFragment();
+            fragmentTransaction.replace(R.id.navcontent, profileFragment, "PROFILE_FRAGMENT");
+            fragmentTransaction.commit();
+
             String mTitle = "Profile";
             actionBar.setTitle(mTitle);
+
 
         } else if (id == R.id.nav_settings) {
 
             String mTitle = "Settings";
             actionBar.setTitle(mTitle);
+
+            Intent takeUsertoSettings = new Intent(this, SettingsActivity.class);
+            startActivity(takeUsertoSettings);
 
         } else if (id == R.id.nav_security) {
 
@@ -142,6 +156,18 @@ public class MainNavActivity extends AppCompatActivity
             String mTitle = "Random Facts";
             actionBar.setTitle(mTitle);
 
+        }
+
+          else if (id ==R.id.nav_logout) {
+
+            Intent takeUserCreate = new Intent(this, EventCreateActivity.class);
+            startActivity(takeUserCreate);
+
+            /*
+            ParseUser.logOut();
+            Intent takeUserLogin = new Intent(this,LoginActivity.class);
+            startActivity(takeUserLogin);
+*/
         }
 
         /*

@@ -9,24 +9,28 @@ package com.example.skylife.parsedb;
 
  */
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.parse.ParseACL;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
-
-import java.io.ByteArrayOutputStream;
+import com.squareup.picasso.Picasso;
 
 
 public class EventFragment extends Fragment implements View.OnClickListener {
@@ -39,7 +43,12 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
     View view;
 
+    String eventId;
+    ParseRelation<ParseObject> relation;
     boolean isPressed = false;
+    boolean isJoined;
+    ParseQuery query2;
+    ParseUser user;
 
 
     private String mParam1;
@@ -65,6 +74,8 @@ public class EventFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
     }
 
 
@@ -78,16 +89,79 @@ public class EventFragment extends Fragment implements View.OnClickListener {
         implement opposite button reaction like " Participate " and " Not Participate " state changes.
          */
 
-        view = inflater.inflate(R.layout.fragment_event, container, false);
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        view= inflater.inflate(R.layout.fragment_event, container, false);
+
+        final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(this);
+
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("EventData");
+        query.orderByDescending("createdAt");
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+            public void done(ParseObject object, ParseException e) {
+                if (object == null) {
+                    Log.d("EventData", "The get the first method request failed!");
+
+                } else {
+
+                    String eventDescription = "Hey";
+                    ParseFile userImage;
+
+                    eventDescription = object.getString("eventContext");
+                    userImage = object.getParseFile("eventPhoto");
+                    String eventImageUrl = userImage.getUrl();
+                    eventId = object.getObjectId();
+
+                    user = ParseUser.getCurrentUser();
+
+                    relation = user.getRelation("events");
+                    relation.add(object);
+
+                    query2 = relation.getQuery();
+
+                    query2.getInBackground(eventId, new GetCallback<ParseObject>() {
+                        public void done(ParseObject object, ParseException e) {
+                            if (e == null) {
+
+                                isJoined = object.getBoolean("isJoined");
+
+                                if (isJoined) {
+                                    fab.setImageResource(R.drawable.ic_highlight_remove_36dp);
+                                    isPressed =true;
+                                }
+
+
+                                Toast.makeText(getActivity().getApplicationContext(), " Armo" + isJoined + "orospudur ", Toast.LENGTH_LONG).show();
+                            } else {
+                                // something went wrong
+                            }
+                        }
+                    });
+
+
+                    TextView z = (TextView) view.findViewById(R.id.eventDescriptionText);
+                    z.setText(eventDescription);
+
+                    ImageView i = (ImageView) view.findViewById((R.id.backdrop_lastevent));
+                    Picasso.with(getContext().getApplicationContext()).load(eventImageUrl).
+                            placeholder(R.drawable.ic_highlight_remove_36dp)
+                            .into(i);
+
+
+                }
+            }
+        });
+
+
+
+
 
         return view;
 
     }
 
 
-    @Override
+
     public void onClick(View v) {
         /*Event participation button logic.
         But it needs to be changed with proper one.
@@ -99,11 +173,22 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
             v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
 
-            if (!ParseUser.getCurrentUser().getBoolean("eventA")) {
+                ParseUser.getCurrentUser().increment("eventsParticipated", (-1));
 
-                ParseUser.getCurrentUser().increment("eventsParticipated");
-                ParseUser.getCurrentUser().put("eventA", true);
-            }
+            query2.getInBackground(eventId, new GetCallback<ParseObject>() {
+                public void done(ParseObject object, ParseException e) {
+                    if (e == null) {
+
+                        object.put("isJoined", false);
+                        object.saveInBackground();
+
+                        Toast.makeText(getActivity().getApplicationContext(), " Armo" + isJoined + "orospudur ", Toast.LENGTH_LONG).show();
+                    } else {
+                        // something went wrong
+                    }
+                }
+            });
+
 
             fab.setImageResource(R.drawable.ic_assignment_turned_in_24dp);
             Snackbar.make(view, "You disjoined that event!", Snackbar.LENGTH_LONG)
@@ -114,18 +199,38 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
             v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
 
-            fab.setImageResource(R.drawable.ic_highlight_remove_24dp);
+            fab.setImageResource(R.drawable.ic_highlight_remove_36dp);
             Snackbar.make(view, "You joined that event!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 
-            ParseUser.getCurrentUser().increment("eventsParticipated", (-1));
-            ParseUser.getCurrentUser().put("eventA", false);
+            ParseUser.getCurrentUser().increment("eventsParticipated", (1));
 
-            ParseUser.getCurrentUser().saveInBackground();
+            query2.getInBackground(eventId, new GetCallback<ParseObject>() {
+                public void done(ParseObject object, ParseException e) {
+                    if (e == null) {
+
+                        object.put("isJoined", true);
+                        object.saveInBackground();
+
+
+                        Toast.makeText(getActivity().getApplicationContext(), " Armo" + isJoined + "orospudur ", Toast.LENGTH_LONG).show();
+                    } else {
+                        // something went wrong
+                    }
+                }
+            });
+
+
 
         }
 
-        isPressed = !isPressed;
+
+        isPressed= !isPressed;
+
+        ParseUser.getCurrentUser().saveInBackground();
+
+
+
 
 
         ParseUser.getCurrentUser().saveInBackground();
@@ -134,7 +239,6 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
     }
 
-
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -142,18 +246,20 @@ public class EventFragment extends Fragment implements View.OnClickListener {
     }
 
 
-
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
 
+    /*
     public void addEvent(ParseObject o) {
 
-        /*
+
         Take one of the pre-defined image as a Bitmap converts into ByteArray and compresses for lower
         quality. We want to reduce quality because of our database's speed&reliability concerns.
         Quality is now %80 of original one.
          */
+
+        /*
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
                 R.drawable.peace);
 
@@ -162,10 +268,10 @@ public class EventFragment extends Fragment implements View.OnClickListener {
         bitmap.compress(Bitmap.CompressFormat.PNG, 80, stream);
         byte[] image = stream.toByteArray();
 
-        /*
+
         Event creation logic. IT IS JUST A TEST METHOD to see what we can do.
         ( We can do anything because we are magicians of thee new world ! )
-         */
+
         ParseFile file = new ParseFile("eventPhoto.png", image);
         file.saveInBackground();
 
@@ -186,5 +292,5 @@ public class EventFragment extends Fragment implements View.OnClickListener {
         //TEST 1 2 3
 
     }
-
+*/
 }

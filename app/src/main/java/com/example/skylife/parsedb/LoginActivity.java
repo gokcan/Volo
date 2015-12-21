@@ -62,25 +62,20 @@ public class LoginActivity extends AppCompatActivity{
                 /*
                 This part is the coolest snippet of our LoginActivity .
                 Snackbar raises text just after the login. We welcome our users with their name and cat emoji :)
-                Cool, huh ?
+                Cool, huh ? Yeah I know it displays given username without verification. But otherwise we could not catch the login's
+                fast speed.
                  */
-                final Snackbar snackbar = Snackbar
+
+                Snackbar snackbar = Snackbar
                         .make(v, "Nice to see you " + username + " \uD83D\uDE3B ", Snackbar.LENGTH_LONG)
                         .setAction("action", null);
-
                 snackbar.show();
 
-                /*dwdjkndcjnejkncekjcnkjencjkenjkcnjencfjkencf
-                feferferfeferfeferfe
-                rfefrerferferferferferf
-                referfefrbhhlvllvgugvj Used for some delay. We cannot use Thread.sleep() method.
-                 */
+
                 ParseUser.logInInBackground(username, password, new LogInCallback() {
 
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {
-
-                            // Hooray! The user is logged in!
 
                             /*
                             The mediaplayer instance starts playing before the Intent. Because

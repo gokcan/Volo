@@ -123,4 +123,5 @@ Contact Us.
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_event_creation">EventCreationActivity</string>
+    <string name="title_activity_event_create">EventCreateActivity</string>
 </resources>

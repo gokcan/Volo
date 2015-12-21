@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -98,14 +99,20 @@ public class SignupActivity extends AppCompatActivity  {
                     user.setPassword(password);
 
                     user.setEmail(email);
+
+                    user.put("eventsParticipated", 0);
+                    user.put("isNew", true);
+
+                    ParseObject object = new ParseObject("EventData");
+
+
+
                     /*
                     Use that in LoginActivity ..
 
                     user = ParseUser.getCurrentUser();
                     Boolean isVerified = user.getBoolean("emailVerified");
                     */
-
-
 
                     user.signUpInBackground(new SignUpCallback() {
                         public void done(ParseException e) {
@@ -122,12 +129,11 @@ public class SignupActivity extends AppCompatActivity  {
                                 Toast.makeText(SignupActivity.this, "Please verify your Email! ", Toast.LENGTH_SHORT).show();
 
                                 /*
-                                Lets take user Signup screen to our MainNavActivity
+                                Lets take user Signup screen to our LoginActivity
                                  */
-                                Intent takeUserHome = new Intent(SignupActivity.this, MainNavActivity.class);
+                                Intent takeUserLogin = new Intent(SignupActivity.this, LoginActivity.class);
                                 overridePendingTransition(R.anim.abc_grow_fade_in_from_bottom, R.anim.abc_grow_fade_in_from_bottom);
-                                startActivity(takeUserHome);
-
+                                startActivity(takeUserLogin);
 
 
                             } else {

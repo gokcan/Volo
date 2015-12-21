@@ -24,7 +24,9 @@ public class RandomFacts {
             "Some penguins can leap 2-3 meters out of the water.",
             "Bob Dylan’s real name is Robert Zimmerman.",
             "Mammoths still walked the earth when the Great Pyramid was being built.",
-            "Recycling one glass jar saves enough energy to watch TV for 3 hours." };
+            "Recycling one glass jar saves enough energy to watch TV for 3 hours.",
+            "Öznur Hoca is the best teacher at Bilkent University"
+    };
 
 
     public String getFact() {
