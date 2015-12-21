@@ -14,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.parse.ParseUser;
+
 /*
 
 ||v1.0||
@@ -150,9 +152,13 @@ public class MainNavActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_security) {
 
+            /*
             RandomFacts facts = new RandomFacts();
             String fact = facts.getFact();
-            Toast.makeText(MainNavActivity.this, fact, Toast.LENGTH_LONG).show();
+            */
+            RandomEmojis emojis = new RandomEmojis();
+            String emoji = emojis.getEmoji();
+            Toast.makeText(MainNavActivity.this, emoji, Toast.LENGTH_LONG).show();
             String mTitle = "Random Facts";
             actionBar.setTitle(mTitle);
 
@@ -160,14 +166,16 @@ public class MainNavActivity extends AppCompatActivity
 
           else if (id ==R.id.nav_logout) {
 
+            /*
             Intent takeUserCreate = new Intent(this, EventCreateActivity.class);
             startActivity(takeUserCreate);
+            */
 
-            /*
+
             ParseUser.logOut();
             Intent takeUserLogin = new Intent(this,LoginActivity.class);
             startActivity(takeUserLogin);
-*/
+
         }
 
         /*

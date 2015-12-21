@@ -103,7 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:textColor="@color/red"
+        android:textColor="@color/blue"
         android:textColorHighlight="@color/blue"
         android:id="@+id/eventsParticipated"
         android:layout_below="@+id/eventsPrt"

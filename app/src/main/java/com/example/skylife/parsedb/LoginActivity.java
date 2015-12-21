@@ -65,9 +65,10 @@ public class LoginActivity extends AppCompatActivity{
                 Cool, huh ? Yeah I know it displays given username without verification. But otherwise we could not catch the login's
                 fast speed.
                  */
+                RandomEmojis emoji = new RandomEmojis();
 
                 Snackbar snackbar = Snackbar
-                        .make(v, "Nice to see you " + username + " \uD83D\uDE3B ", Snackbar.LENGTH_LONG)
+                        .make(v, "Nice to see you " + username + emoji.getEmoji(), Snackbar.LENGTH_LONG)
                         .setAction("action", null);
                 snackbar.show();
 

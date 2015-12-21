@@ -1,32 +1,34 @@
 package com.example.skylife.parsedb;
 
+/*
+
+||v1.0||
+||Author: Berke Soysal ||
+||For detailed information please dont visit anywhere ||
+||Button logic @Skylifee7||
+
+ */
+
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.view.HapticFeedbackConstants;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
-
-import java.util.Random;
-
-/**
- * package com.example.skylife.parsedb;
- * <p/>
- * /*
- * <p/>
- * ||v1.0||
- * ||Author: Berke SOYSAL, Mert Armağan SARI||
- */
 
 
 public class ClickedEventFragment extends Fragment implements View.OnClickListener {
@@ -36,21 +38,25 @@ public class ClickedEventFragment extends Fragment implements View.OnClickListen
      */
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    Random generator = new Random();
-    static View view;
-    String eventname1="hicbise";
+    private String theid;
+    View view;
+
+    String eventId;
+    ParseRelation<ParseObject> relation;
+    boolean isPressed = false;
+    boolean isJoined;
+    ParseQuery query2;
+    ParseUser user;
+
+
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    private static String text3;
-    protected ParseObject oneobje;
-    public String jojo="default";
+
     public ClickedEventFragment() {
         // Required empty public constructor
     }
-
-
 
 
     public static EventFragment newInstance(String param1, String param2) {
@@ -60,14 +66,13 @@ public class ClickedEventFragment extends Fragment implements View.OnClickListen
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
+
+
 
     }
 
@@ -82,33 +87,143 @@ public class ClickedEventFragment extends Fragment implements View.OnClickListen
         implement opposite button reaction like " Participate " and " Not Participate " state changes.
          */
 
-        view = inflater.inflate(R.layout.fragment_clickedevent, container, false);
+        view= inflater.inflate(R.layout.fragment_clickedevent, container, false);
 
-        parseExecution();
+        final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(this);
 
+
+        Bundle bundle = this.getArguments();
+        theid = bundle.getString("id","d");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("EventData");
+        query.getInBackground(theid, new GetCallback<ParseObject>() {
+            public void done(ParseObject object, ParseException e) {
+                if (e == null) {
+
+
+                    String eventName = "deneme ";
+                    eventName = object.getString("eventName");
+                    TextView text1 = (TextView) view.findViewById(R.id.eventDescriptionText);
+                    text1.setText(eventName);
+                    String eventCont = "";
+                    eventCont = object.getString("eventContext");
+                    ImageView imageHP;
+                    imageHP = (ImageView) view.findViewById(R.id.backdrop_event);
+                    Picasso.with(getContext().
+                            getApplicationContext()).
+                            load(object.getParseFile("eventPhoto").
+                                    getUrl()).noFade().
+                            into(imageHP);
+
+                    user = ParseUser.getCurrentUser();
+
+                    relation = user.getRelation("events");
+                    relation.add(object);
+
+                    query2 = relation.getQuery();
+
+                    query2.getInBackground(theid, new GetCallback<ParseObject>() {
+                        public void done(ParseObject object, ParseException e) {
+                            if (e == null) {
+
+                                isJoined = object.getBoolean("isJoined");
+
+                                if (isJoined) {
+                                    fab.setImageResource(R.drawable.ic_highlight_remove_36dp);
+                                    isPressed = true;
+                                }
+                                else {
+
+                                }
+
+
+                            } else {
+                                // something went wrong
+                            }
+                        }
+                    });
+
+
+                } else {
+
+
+                }
+            }
+        });
 
         return view;
 
     }
 
-    @Override
+
+
     public void onClick(View v) {
         /*Event participation button logic.
         But it needs to be changed with proper one.
         It is a just a placeholder for event participation counter problem.
          */
 
-        ParseObject eventsPrt = new ParseObject("eventsPrt");
-        eventsPrt.put("eventsPrt", ParseUser.getCurrentUser());
-        ParseUser.getCurrentUser().put("eventsPrt", 1);
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        if (isPressed) {
 
-        eventsPrt.saveInBackground();
+            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            ParseUser.getCurrentUser().increment("eventsParticipated", (-1));
 
-        Snackbar.make(view, "You joined that event!", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+            query2.getInBackground(theid, new GetCallback<ParseObject>() {
+                public void done(ParseObject object, ParseException e) {
+                    if (e == null) {
+
+                        object.put("isJoined", false);
+                        object.saveInBackground();
+
+                        Toast.makeText(getActivity().getApplicationContext(), " Armo" + isJoined + "orospudur ", Toast.LENGTH_LONG).show();
+                    } else {
+                        // something went wrong
+                    }
+                }
+            });
+
+
+            fab.setImageResource(R.drawable.ic_assignment_turned_in_24dp);
+            Snackbar.make(view, "You disjoined that event!", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+
+        }
+        else {
+
+            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+
+            fab.setImageResource(R.drawable.ic_highlight_remove_36dp);
+            Snackbar.make(view, "You joined that event!", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+
+            ParseUser.getCurrentUser().increment("eventsParticipated", (1));
+
+            query2.getInBackground(theid, new GetCallback<ParseObject>() {
+                public void done(ParseObject object, ParseException e) {
+                    if (e == null) {
+
+                        object.put("isJoined", true);
+                        object.saveInBackground();
+
+
+
+                    } else {
+                        // something went wrong
+                    }
+                }
+            });
+
+
+
+        }
+
+
+        isPressed= !isPressed;
+
+        ParseUser.getCurrentUser().saveInBackground();
 
     }
-
 
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -135,6 +250,8 @@ public class ClickedEventFragment extends Fragment implements View.OnClickListen
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
 
+
+
                     String eventName="deneme ";
                     eventName=object.getString("eventName");
                     TextView text1 = (TextView) view.findViewById(R.id.eventDescriptionText);
@@ -158,4 +275,5 @@ public class ClickedEventFragment extends Fragment implements View.OnClickListen
 
     }
 }
+
 

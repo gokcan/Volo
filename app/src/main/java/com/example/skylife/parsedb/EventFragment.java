@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -119,6 +118,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
                     query2 = relation.getQuery();
 
+
                     query2.getInBackground(eventId, new GetCallback<ParseObject>() {
                         public void done(ParseObject object, ParseException e) {
                             if (e == null) {
@@ -130,8 +130,6 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                                     isPressed =true;
                                 }
 
-
-                                Toast.makeText(getActivity().getApplicationContext(), " Armo" + isJoined + "orospudur ", Toast.LENGTH_LONG).show();
                             } else {
                                 // something went wrong
                             }
@@ -154,8 +152,6 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
 
 
-
-
         return view;
 
     }
@@ -173,7 +169,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
             v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
 
-                ParseUser.getCurrentUser().increment("eventsParticipated", (-1));
+                //ParseUser.getCurrentUser().increment("eventsParticipated", (-1));
 
             query2.getInBackground(eventId, new GetCallback<ParseObject>() {
                 public void done(ParseObject object, ParseException e) {
@@ -182,7 +178,6 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                         object.put("isJoined", false);
                         object.saveInBackground();
 
-                        Toast.makeText(getActivity().getApplicationContext(), " Armo" + isJoined + "orospudur ", Toast.LENGTH_LONG).show();
                     } else {
                         // something went wrong
                     }
@@ -203,7 +198,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
             Snackbar.make(view, "You joined that event!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 
-            ParseUser.getCurrentUser().increment("eventsParticipated", (1));
+         //   ParseUser.getCurrentUser().increment("eventsParticipated", (1));
 
             query2.getInBackground(eventId, new GetCallback<ParseObject>() {
                 public void done(ParseObject object, ParseException e) {
@@ -213,7 +208,6 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                         object.saveInBackground();
 
 
-                        Toast.makeText(getActivity().getApplicationContext(), " Armo" + isJoined + "orospudur ", Toast.LENGTH_LONG).show();
                     } else {
                         // something went wrong
                     }
@@ -226,12 +220,6 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
 
         isPressed= !isPressed;
-
-        ParseUser.getCurrentUser().saveInBackground();
-
-
-
-
 
         ParseUser.getCurrentUser().saveInBackground();
 

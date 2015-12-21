@@ -10,16 +10,9 @@ package com.example.skylife.parsedb;
 
 import android.app.Application;
 
-import com.parse.FindCallback;
 import com.parse.Parse;
-import com.parse.ParseException;
 import com.parse.ParseInstallation;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseRelation;
 import com.parse.ParseUser;
-
-import java.util.List;
 
 public class GlobalApplication extends Application {
 
@@ -34,6 +27,7 @@ public class GlobalApplication extends Application {
 
         ParseUser user = ParseUser.getCurrentUser();
 
+        /*
         ParseRelation relation = user.getRelation("events");
 
         ParseQuery query2 = relation.getQuery();
@@ -48,7 +42,7 @@ public class GlobalApplication extends Application {
         }
     }
 });
-
+*/
 
     }
 
