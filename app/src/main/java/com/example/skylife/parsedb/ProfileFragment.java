@@ -236,6 +236,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 if (e == null) {
                     ParseUser.getCurrentUser().put("eventsParticipated", eventList.size());
                 } else {
+
                     Toast.makeText(getActivity().getApplicationContext(), " Something happened.", Toast.LENGTH_LONG).show();
 
                 }

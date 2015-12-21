@@ -13,9 +13,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * Created by berkesoysal8a on 18/12/15.
- */
+/* ||v1.0||
+        * ||Author: Berke SOYSAL, Mert Armağan SARI||
+        */
 public class EventAdapter extends ArrayAdapter<ParseObject> {
 
     protected Context mContext;

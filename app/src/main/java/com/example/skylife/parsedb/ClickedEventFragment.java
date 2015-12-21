@@ -25,9 +25,7 @@ import java.util.Random;
  * /*
  * <p/>
  * ||v1.0||
- * ||Author: Gökcan DEĞİRMENCİ||
- * ||For detailed information please visit http://gokcan.degirmenci.me ||
- * ||@Skylifee7||
+ * ||Author: Berke SOYSAL, Mert Armağan SARI||
  */
 
 
