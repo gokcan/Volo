@@ -1,5 +1,14 @@
 package com.example.skylife.parsedb;
 
+/*
+
+||v1.0||
+||Author: Gökcan DEĞİRMENCİ||
+||For detailed information please visit http://gokcan.degirmenci.me ||
+||@Skylifee7||
+
+ */
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;

@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.parse.CountCallback;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -30,6 +32,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 
 public class EventFragment extends Fragment implements View.OnClickListener {
@@ -46,8 +50,11 @@ public class EventFragment extends Fragment implements View.OnClickListener {
     ParseRelation<ParseObject> relation;
     boolean isPressed = false;
     boolean isJoined;
-    ParseQuery query2;
+    boolean isPart;
     ParseUser user;
+    int count;
+    String userid;
+    ParseQuery<ParseObject> query2;
 
 
     private String mParam1;
@@ -84,14 +91,14 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
         /*
         FloatingAB used for material design guidelines.
-        We listen for clicks but in this version user can click many times we need to
-        implement opposite button reaction like " Participate " and " Not Participate " state changes.
+        This is a really complicated logic of participate event button.
          */
 
         view= inflater.inflate(R.layout.fragment_event, container, false);
 
         final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(this);
+
 
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("EventData");
@@ -113,26 +120,59 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
                     user = ParseUser.getCurrentUser();
 
-                    relation = user.getRelation("events");
-                    relation.add(object);
-
-                    query2 = relation.getQuery();
+                    userid = user.getObjectId();
 
 
-                    query2.getInBackground(eventId, new GetCallback<ParseObject>() {
-                        public void done(ParseObject object, ParseException e) {
+                    query2 = ParseQuery.getQuery("event_user");
+                    query2.whereEqualTo("userID", userid);
+                    query2.whereEqualTo("eventID", eventId);
+
+
+
+                    query2.countInBackground(new CountCallback() {
+                        @Override
+                        public void done(int countA, ParseException e) {
+
                             if (e == null) {
+                                count = countA;
 
-                                isJoined = object.getBoolean("isJoined");
+                                if (count == 0) {
 
-                                if (isJoined) {
-                                    fab.setImageResource(R.drawable.ic_highlight_remove_36dp);
-                                    isPressed =true;
+                                    ParseObject obj = new ParseObject("event_user");
+                                    obj.put("userID", userid);
+                                    obj.put("eventID", eventId);
+                                    obj.put("isPart", false);
+
+
+                                    obj.saveInBackground();
+
                                 }
 
-                            } else {
-                                // something went wrong
+                                if (count ==1) {
+
+                                    query2.findInBackground(new FindCallback<ParseObject>() {
+                                        public void done(List<ParseObject> relationList, ParseException e) {
+                                            if (e == null) {
+                                                isPart = relationList.get(0).getBoolean("isPart");
+                                                relationList.get(0).saveInBackground();
+
+                                                if (isPart) {
+                                                    fab.setImageResource(R.drawable.ic_highlight_remove_36dp);
+                                                    isPressed = true;
+
+                                                }
+                                            } else {
+                                                Log.d("score", "Error: " + e.getMessage());
+                                            }
+                                        }
+                                    });
+
+
+
+                                }
+
                             }
+
                         }
                     });
 
@@ -169,17 +209,21 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
             v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
 
-                //ParseUser.getCurrentUser().increment("eventsParticipated", (-1));
+          //  ParseUser.getCurrentUser().increment("eventsParticipated", (-1));
 
-            query2.getInBackground(eventId, new GetCallback<ParseObject>() {
-                public void done(ParseObject object, ParseException e) {
+            query2 = ParseQuery.getQuery("event_user");
+            query2.whereEqualTo("userID", userid);
+            query2.whereEqualTo("eventID", eventId);
+
+
+            query2.findInBackground(new FindCallback<ParseObject>() {
+                public void done(List<ParseObject> relationList, ParseException e) {
                     if (e == null) {
-
-                        object.put("isJoined", false);
-                        object.saveInBackground();
+                       relationList.get(0).put("isPart", false);
+                        relationList.get(0).saveInBackground();
 
                     } else {
-                        // something went wrong
+                        Log.d("score", "Error: " + e.getMessage());
                     }
                 }
             });
@@ -189,30 +233,32 @@ public class EventFragment extends Fragment implements View.OnClickListener {
             Snackbar.make(view, "You disjoined that event!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 
-        }
-        else {
+        } else {
 
             v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+
+
+           // ParseUser.getCurrentUser().increment("eventsParticipated", (1));
+
+            query2 = ParseQuery.getQuery("event_user");
+            query2.whereEqualTo("userID", userid);
+            query2.whereEqualTo("eventID", eventId);
+
+            query2.findInBackground(new FindCallback<ParseObject>() {
+                public void done(List<ParseObject> relationList, ParseException e) {
+                    if (e == null) {
+                        relationList.get(0).put("isPart", true);
+                        relationList.get(0).saveInBackground();
+
+                    } else {
+                        Log.d("score", "Error: " + e.getMessage());
+                    }
+                }
+            });
 
             fab.setImageResource(R.drawable.ic_highlight_remove_36dp);
             Snackbar.make(view, "You joined that event!", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
-
-         //   ParseUser.getCurrentUser().increment("eventsParticipated", (1));
-
-            query2.getInBackground(eventId, new GetCallback<ParseObject>() {
-                public void done(ParseObject object, ParseException e) {
-                    if (e == null) {
-
-                        object.put("isJoined", true);
-                        object.saveInBackground();
-
-
-                    } else {
-                        // something went wrong
-                    }
-                }
-            });
 
 
 

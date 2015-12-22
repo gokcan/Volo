@@ -28,6 +28,7 @@ import com.parse.ParseUser;
 public class MainNavActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +36,8 @@ public class MainNavActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
         EventFragment eventFragment = new EventFragment();
         fragmentTransaction.replace(R.id.navcontent, eventFragment, "HOME_FRAGMENT");
         fragmentTransaction.commit();
@@ -66,8 +67,11 @@ public class MainNavActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+
+
         } else {
             super.onBackPressed();
+
         }
     }
 
@@ -77,6 +81,7 @@ public class MainNavActivity extends AppCompatActivity
          Inflate the menu; this adds items to the action bar if it is present.
           */
         getMenuInflater().inflate(R.menu.navigation, menu);
+
         return true;
     }
 

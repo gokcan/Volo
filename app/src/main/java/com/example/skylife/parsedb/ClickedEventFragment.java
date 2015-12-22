@@ -5,7 +5,7 @@ package com.example.skylife.parsedb;
 ||v1.0||
 ||Author: Berke Soysal ||
 ||For detailed information please dont visit anywhere ||
-||Button logic @Skylifee7||
+||@Skylifee7||
 
  */
 

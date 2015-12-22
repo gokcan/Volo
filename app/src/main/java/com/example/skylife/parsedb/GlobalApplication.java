@@ -12,7 +12,6 @@ import android.app.Application;
 
 import com.parse.Parse;
 import com.parse.ParseInstallation;
-import com.parse.ParseUser;
 
 public class GlobalApplication extends Application {
 
@@ -25,24 +24,7 @@ public class GlobalApplication extends Application {
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
 
-        ParseUser user = ParseUser.getCurrentUser();
 
-        /*
-        ParseRelation relation = user.getRelation("events");
-
-        ParseQuery query2 = relation.getQuery();
-        query2.whereEqualTo("isJoined", true);
-
-        query2.findInBackground(new FindCallback<ParseObject>() {
-        public void done(List<ParseObject> scoreList, ParseException e) {
-        if (e == null) {
-             ParseUser.getCurrentUser().put("eventsParticipated", scoreList.size());
-        } else {
-
-        }
-    }
-});
-*/
 
     }
 

@@ -29,7 +29,6 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 
@@ -39,27 +38,29 @@ import java.io.IOException;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ProfileFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ProfileFragment extends Fragment implements View.OnClickListener {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public final static int PICK_PHOTO_CODE = 1046;
 
     View myInflatedView;
+    String stringEventParticipated;
+    int eventsParticipated;
+    TextView r, t;
+    StringBuilder s;
+    ParseUser user;
+    ParseQuery query2;
+    ParseFile file;
+    Bitmap bitmap;
+    ByteArrayOutputStream stream;
+    Uri imageUri;
+    byte[] image;
 
     private OnFragmentInteractionListener mListener;
 
@@ -67,15 +68,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static ProfileFragment newInstance(String param1, String param2) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
@@ -92,11 +85,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
 
-            countEventParticipated();
-
-
 
         }
+
     }
 
     @Override
@@ -108,14 +99,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         FloatingActionButton fabUpload = (FloatingActionButton) myInflatedView.findViewById(R.id.fabImageUpload);
         fabUpload.setOnClickListener(this);
 
+        countEventParticipated();
+
+
+
         if(ParseUser.getCurrentUser().getBoolean("isNew")) {
             Toast.makeText(getActivity().getApplicationContext(), "Please upload a profil picture", Toast.LENGTH_LONG).show();
         }
 
+
         ParseUser user = ParseUser.getCurrentUser();
-        String email = user.getEmail();
         String userName = user.getUsername();
-        int eventsParticipated = user.getInt("eventsParticipated");
 
 
         if (!(user.getBoolean("isNew"))) {
@@ -140,18 +134,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         }
 
 
-
-        StringBuilder s = new StringBuilder();
-        s.append("");
-        s.append(eventsParticipated);
-        String stringEventParticipated = s.toString();
-
         // Set the text with its username.
-        TextView t = (TextView) myInflatedView.findViewById(R.id.userName);
+        t = (TextView) myInflatedView.findViewById(R.id.userName);
         t.setText(userName);
-
-        TextView e = (TextView) myInflatedView.findViewById((R.id.eventsParticipated));
-        e.setText(stringEventParticipated);
 
 
 
@@ -178,7 +163,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data != null) {
 
-            Uri imageUri = data.getData();
+            imageUri = data.getData();
             ImageView i = (ImageView) myInflatedView.findViewById((R.id.userPhoto));
 
 
@@ -194,16 +179,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public void uploadFiletoDb (Intent data) {
         try {
 
-            Uri imageUri = data.getData();
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), imageUri);
+            imageUri = data.getData();
+            bitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), imageUri);
 
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 15, stream);
 
-            byte[] image = stream.toByteArray();
+            image = stream.toByteArray();
 
-            ParseUser user = ParseUser.getCurrentUser();
-            ParseFile file = new ParseFile(ParseUser.getCurrentUser().getUsername()+".png", image);
+            user = ParseUser.getCurrentUser();
+            file = new ParseFile(ParseUser.getCurrentUser().getUsername()+".png", image);
             file.saveInBackground();
 
             user.put("profilePhoto", file);
@@ -224,25 +209,41 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     public void countEventParticipated() {
 
-        ParseUser user = ParseUser.getCurrentUser();
+        user = ParseUser.getCurrentUser();
 
-        ParseRelation relation = user.getRelation("events");
+        query2= ParseQuery.getQuery("event_user");
+        query2.whereEqualTo("userID", user.getObjectId());
+        query2.whereEqualTo("isPart", true);
 
-        ParseQuery query2 = relation.getQuery();
-        query2.whereEqualTo("isJoined", true);
 
         query2.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> eventList, ParseException e) {
                 if (e == null) {
-                    ParseUser.getCurrentUser().put("eventsParticipated", eventList.size());
+
+                    user.put("eventsParticipated", eventList.size());
+                    eventsParticipated = ParseUser.getCurrentUser().getInt("eventsParticipated");
+
+                    s = new StringBuilder();
+                    s.append("");
+                    s.append(eventsParticipated);
+                    stringEventParticipated = s.toString();
+
+                    r = (TextView) myInflatedView.findViewById((R.id.eventsParticipated));
+                    r.setText(stringEventParticipated);
+
+
                 } else {
 
-                    Toast.makeText(getActivity().getApplicationContext(), " Something happened.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "Events participated could not loaded!", Toast.LENGTH_LONG).show();
+
 
                 }
             }
         });
+
+        ParseUser.getCurrentUser().saveInBackground();
     }
+
 
 
     public void onButtonPressed(Uri uri) {
@@ -252,16 +253,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
