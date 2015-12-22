@@ -1,3 +1,4 @@
+
 package com.example.skylife.parsedb;
 
 /*
@@ -36,7 +37,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 
-public class EventFragment extends Fragment implements View.OnClickListener {
+public class ClikedEventFragment extends Fragment implements View.OnClickListener {
 
     /*
     Initiliazing the params and our view.
@@ -54,6 +55,8 @@ public class EventFragment extends Fragment implements View.OnClickListener {
     int count;
     String userid;
     ParseQuery<ParseObject> query2;
+    private String theid;
+
 
 
     private String mParam1;
@@ -61,7 +64,8 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
 
-    public EventFragment() {
+    public ClikedEventFragment() {
+
         // Required empty public constructor
     }
 
@@ -98,16 +102,18 @@ public class EventFragment extends Fragment implements View.OnClickListener {
         final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(this);
 
-
+        Bundle bundle = this.getArguments();
+        theid = bundle.getString("id","d");
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("EventData");
-        query.orderByDescending("updatedAt");
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
+
+        query.getInBackground(theid, new GetCallback<ParseObject>() {
             public void done(ParseObject object, ParseException e) {
                 if (object == null) {
                     Log.d("EventData", "The get the first method request failed!");
 
                 } else {
+
 
                     String eventDescription = "Hey";
                     ParseFile userImage;
@@ -147,13 +153,16 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
                                 }
 
-                                if (count ==1) {
+                                if (count == 1) {
 
                                     query2.findInBackground(new FindCallback<ParseObject>() {
                                         public void done(List<ParseObject> relationList, ParseException e) {
                                             if (e == null) {
-                                                isPart = relationList.get(0).getBoolean("isPart");
-                                                relationList.get(0).saveInBackground();
+
+                                                if (relationList.size() > 0) {
+                                                    isPart = relationList.get(0).getBoolean("isPart");
+                                                    relationList.get(0).saveInBackground();
+                                                }
 
                                                 if (isPart) {
                                                     fab.setImageResource(R.drawable.ic_highlight_remove_36dp);
@@ -165,7 +174,6 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                                             }
                                         }
                                     });
-
 
 
                                 }
@@ -208,7 +216,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
             v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
 
-          //  ParseUser.getCurrentUser().increment("eventsParticipated", (-1));
+            //  ParseUser.getCurrentUser().increment("eventsParticipated", (-1));
 
             query2 = ParseQuery.getQuery("event_user");
             query2.whereEqualTo("userID", userid);
@@ -218,7 +226,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
             query2.findInBackground(new FindCallback<ParseObject>() {
                 public void done(List<ParseObject> relationList, ParseException e) {
                     if (e == null) {
-                       relationList.get(0).put("isPart", false);
+                        relationList.get(0).put("isPart", false);
                         relationList.get(0).saveInBackground();
 
                     } else {
@@ -237,7 +245,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
             v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
 
 
-           // ParseUser.getCurrentUser().increment("eventsParticipated", (1));
+            // ParseUser.getCurrentUser().increment("eventsParticipated", (1));
 
             query2 = ParseQuery.getQuery("event_user");
             query2.whereEqualTo("userID", userid);
@@ -246,8 +254,11 @@ public class EventFragment extends Fragment implements View.OnClickListener {
             query2.findInBackground(new FindCallback<ParseObject>() {
                 public void done(List<ParseObject> relationList, ParseException e) {
                     if (e == null) {
-                        relationList.get(0).put("isPart", true);
-                        relationList.get(0).saveInBackground();
+
+                        if (relationList.size() > 0) {
+                            relationList.get(0).put("isPart", true);
+                            relationList.get(0).saveInBackground();
+                        }
 
                     } else {
                         Log.d("score", "Error: " + e.getMessage());
@@ -283,5 +294,51 @@ public class EventFragment extends Fragment implements View.OnClickListener {
         void onFragmentInteraction(Uri uri);
     }
 
+    /*
+    public void addEvent(ParseObject o) {
 
+
+        Take one of the pre-defined image as a Bitmap converts into ByteArray and compresses for lower
+        quality. We want to reduce quality because of our database's speed&reliability concerns.
+        Quality is now %80 of original one.
+         */
+
+        /*
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),
+                R.drawable.peace);
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, stream);
+        byte[] image = stream.toByteArray();
+
+
+        Event creation logic. IT IS JUST A TEST METHOD to see what we can do.
+        ( We can do anything because we are magicians of thee new world ! )
+
+        ParseFile file = new ParseFile("eventPhoto.png", image);
+        file.saveInBackground();
+
+        ParseACL acl = new ParseACL();
+        acl.setPublicReadAccess(true);
+        acl.setWriteAccess(ParseUser.getCurrentUser(), true);
+
+        ParseObject eventObject = new ParseObject("EventData");
+        eventObject.put("eventName", "Street Lamp Meeting");
+        eventObject.put("eventDescription", "Street Lamp Project is a really helpful project which helps street orphan childs.");
+        eventObject.put("availability", true);
+        eventObject.put("eventPhoto", file);
+        eventObject.put("createdBy", ParseUser.getCurrentUser());
+        eventObject.put("isParticipated", false);
+        eventObject.setACL(acl);
+        eventObject.saveInBackground();
+
+        //TEST 1 2 3
+
+    }
+*/
 }
+
+
+
+

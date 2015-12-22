@@ -23,9 +23,11 @@ public class RandomFacts {
             "The Titanic was the first ship to use the SOS signal.",
             "Some penguins can leap 2-3 meters out of the water.",
             "Bob Dylan’s real name is Robert Zimmerman.",
+            "Bilkent is really precious because of the Ugur Hoca :) ",
             "Mammoths still walked the earth when the Great Pyramid was being built.",
             "Recycling one glass jar saves enough energy to watch TV for 3 hours.",
-            "Öznur Hoca is the best teacher at Bilkent University"
+            "Öznur Hoca is the best teacher at Bilkent University :) "
+
     };
 
 

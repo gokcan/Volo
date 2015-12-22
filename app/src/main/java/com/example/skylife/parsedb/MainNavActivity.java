@@ -3,6 +3,7 @@ package com.example.skylife.parsedb;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.parse.ParseUser;
 
@@ -157,16 +157,49 @@ public class MainNavActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_security) {
 
-            /*
+            /*ProfileListFragment profileListFragment = new ProfileListFragment();
+            fragmentTransaction.replace(R.id.navcontent, profileListFragment, "PROFILELIST_FRAGMENT");
+            fragmentTransaction.commit();
+
+*/
+            ParseUser user = ParseUser.getCurrentUser();
+            Boolean isVerified = user.getBoolean("emailVerified");
+
+            if (isVerified) {
+
+                Intent intent = new Intent(this, EventCreateActivity.class);
+                startActivity(intent);
+
+            }
+
+            else {
+
+                /*
+                Snackbar snackbar = Snackbar
+                        .make(this, "You are not authorized to create event!", Snackbar.LENGTH_LONG)
+                        .setAction("action", null);
+                snackbar.show();
+                */
+
+                HomeFragment homeFragment = new HomeFragment();
+                fragmentTransaction.replace(R.id.navcontent, homeFragment, "HOME_FRAGMENT");
+                fragmentTransaction.commit();
+
+
+
+            }
+        }
+
+        else if (id == R.id.nav_randomfacts) {
+
             RandomFacts facts = new RandomFacts();
             String fact = facts.getFact();
-            */
-            RandomEmojis emojis = new RandomEmojis();
-            String emoji = emojis.getEmoji();
-            Toast.makeText(MainNavActivity.this, emoji, Toast.LENGTH_LONG).show();
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            Snackbar.make(navigationView, fact, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+
             String mTitle = "Random Facts";
             actionBar.setTitle(mTitle);
-
         }
 
           else if (id ==R.id.nav_logout) {

@@ -41,7 +41,6 @@ public class EventAdapter extends ArrayAdapter<ParseObject> {
             convertView.setTag(holder);
 
 
-
         }
         else{
             holder= (ViewHolder) convertView.getTag();
@@ -59,6 +58,7 @@ public class EventAdapter extends ArrayAdapter<ParseObject> {
                 load(eventObject.getParseFile("eventPhoto").
                         getUrl()).noFade().transform(new TransformationCircular()).
                 into(holder.imageHP);
+
 
         eventid=eventObject.getObjectId();
 

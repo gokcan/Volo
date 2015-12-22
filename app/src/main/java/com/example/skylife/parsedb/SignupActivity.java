@@ -110,8 +110,7 @@ public class SignupActivity extends AppCompatActivity  {
                     /*
                     Use that in LoginActivity ..
 
-                    user = ParseUser.getCurrentUser();
-                    Boolean isVerified = user.getBoolean("emailVerified");
+
                     */
 
                     user.signUpInBackground(new SignUpCallback() {

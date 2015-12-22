@@ -20,12 +20,18 @@
             android:title="Settings" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Extras">
         <menu>
             <item
                 android:id="@+id/nav_security"
                 android:icon="@drawable/ic_verified_user_24dp"
-                android:title="Secure"
+                android:title="Add Event (*)"
+                />
+
+            <item
+                android:id="@+id/nav_randomfacts"
+                android:icon="@drawable/ic_mood_24dp"
+                android:title="Random Facts"
                 />
 
             <item

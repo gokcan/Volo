@@ -14,7 +14,7 @@
 
     <header
         android:fragment="com.example.skylife.parsedb.SettingsActivity$DataSyncPreferenceFragment"
-        android:icon="@drawable/ic_sync_black_24dp"
+        android:icon="@drawable/ic_mood_24dp"
         android:title="@string/pref_header_data_sync" />
 
 </preference-headers>

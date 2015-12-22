@@ -1,12 +1,5 @@
 package com.example.skylife.parsedb;
 
-/*
-
-||v1.0||
-||Author: Berke Soysal & Armağan Sarı||
-
-
- */
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,7 +22,7 @@ import java.io.Serializable;
 import java.util.List;
 
 
-public class HomeFragment extends ListFragment implements View.OnClickListener, Serializable {
+public class ProfileListFragment extends ListFragment implements View.OnClickListener, Serializable {
 
     /*
     Initiliazing the params and our view.
@@ -38,21 +31,21 @@ public class HomeFragment extends ListFragment implements View.OnClickListener, 
     String eventName,eventContext;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    protected List<ParseObject> mEvents;
-    View view;
+    protected List<ParseObject> mParticipatedEvents;
+    private View view;
 
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    public HomeFragment() {
+    public ProfileListFragment() {
         // Required empty public constructor
     }
 
 
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
+    public static ProfileListFragment newInstance(String param1, String param2) {
+        ProfileListFragment fragment = new ProfileListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,15 +57,21 @@ public class HomeFragment extends ListFragment implements View.OnClickListener, 
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("EventData");
-        query.orderByDescending("createdAt");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("event_user");
+        query.whereEqualTo("userID", ParseUser.getCurrentUser().getObjectId() );
+        query.whereEqualTo("isPart", true);
+                query.orderByDescending("createdAt");
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> events, ParseException e) {
                 if (e == null) {
-                    mEvents = events;
+                    mParticipatedEvents= events;
 
-                    EventAdapter adapter = new EventAdapter(getListView().getContext(), mEvents);
+
+
+                    ProfileListAdapter adapter = new ProfileListAdapter(getListView().getContext(), mParticipatedEvents);
                     setListAdapter(adapter);
+
+
 
                 } else {
 
@@ -95,7 +94,7 @@ public class HomeFragment extends ListFragment implements View.OnClickListener, 
          */
 
 
-        view = inflater.inflate(R.layout.fragment_home, container, false);
+        view = inflater.inflate(R.layout.fragment_profile_list, container, false);
 
         return view;
 
@@ -137,7 +136,7 @@ public class HomeFragment extends ListFragment implements View.OnClickListener, 
         super.onListItemClick(l, v, position, id);
 
 
-        ParseObject eventObject = mEvents.get(position);
+        ParseObject eventObject = mParticipatedEvents.get(position);
 
         String objectId = eventObject.getObjectId();
         String eventName = eventObject.getString("eventName");
@@ -160,4 +159,3 @@ public class HomeFragment extends ListFragment implements View.OnClickListener, 
     }
 
 }
-
