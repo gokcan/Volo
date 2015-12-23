@@ -24,8 +24,6 @@ public class GlobalApplication extends Application {
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
 
-
-
     }
 
 }

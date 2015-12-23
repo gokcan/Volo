@@ -1,5 +1,6 @@
 package com.example.skylife.parsedb;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -28,6 +29,10 @@ import com.parse.ParseUser;
 public class MainNavActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private Boolean isVerified;
+    Context context;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +43,8 @@ public class MainNavActivity extends AppCompatActivity
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
-        EventFragment eventFragment = new EventFragment();
-        fragmentTransaction.replace(R.id.navcontent, eventFragment, "HOME_FRAGMENT");
+        ProfileFragment profileFragment = new ProfileFragment();
+        fragmentTransaction.replace(R.id.navcontent, profileFragment, "HOME_FRAGMENT");
         fragmentTransaction.commit();
 
         /*
@@ -53,6 +58,12 @@ public class MainNavActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        ParseUser user = ParseUser.getCurrentUser();
+        isVerified = user.getBoolean("emailVerified");
+
+
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
@@ -162,8 +173,6 @@ public class MainNavActivity extends AppCompatActivity
             fragmentTransaction.commit();
 
 */
-            ParseUser user = ParseUser.getCurrentUser();
-            Boolean isVerified = user.getBoolean("emailVerified");
 
             if (isVerified) {
 
@@ -174,13 +183,13 @@ public class MainNavActivity extends AppCompatActivity
 
             else {
 
-                /*
+/*
                 Snackbar snackbar = Snackbar
-                        .make(this, "You are not authorized to create event!", Snackbar.LENGTH_LONG)
+                        .make(getApplicationContext(), "You are not authorized to create event!", Snackbar.LENGTH_LONG)
                         .setAction("action", null);
                 snackbar.show();
-                */
 
+*/
                 HomeFragment homeFragment = new HomeFragment();
                 fragmentTransaction.replace(R.id.navcontent, homeFragment, "HOME_FRAGMENT");
                 fragmentTransaction.commit();

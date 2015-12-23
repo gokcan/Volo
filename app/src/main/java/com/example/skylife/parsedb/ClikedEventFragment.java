@@ -97,7 +97,7 @@ public class ClikedEventFragment extends Fragment implements View.OnClickListene
         This is a really complicated logic of participate event button.
          */
 
-        view= inflater.inflate(R.layout.fragment_event, container, false);
+        view= inflater.inflate(R.layout.fragment_clickedevent, container, false);
 
         final FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(this);
@@ -118,7 +118,10 @@ public class ClikedEventFragment extends Fragment implements View.OnClickListene
                     String eventDescription = "Hey";
                     ParseFile userImage;
 
+                    String eventLocation = " Hi";
+
                     eventDescription = object.getString("eventContext");
+                    eventLocation = object.getString("eventLocation");
                     userImage = object.getParseFile("eventPhoto");
                     String eventImageUrl = userImage.getUrl();
                     eventId = object.getObjectId();
@@ -186,6 +189,9 @@ public class ClikedEventFragment extends Fragment implements View.OnClickListene
 
                     TextView z = (TextView) view.findViewById(R.id.eventDescriptionText);
                     z.setText(eventDescription);
+
+                    TextView f = (TextView) view.findViewById(R.id.eventLocationTextClicked);
+                    f.setText(eventLocation);
 
                     ImageView i = (ImageView) view.findViewById((R.id.backdrop_lastevent));
                     Picasso.with(getContext().getApplicationContext()).load(eventImageUrl).

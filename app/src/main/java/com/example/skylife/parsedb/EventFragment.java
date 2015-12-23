@@ -113,6 +113,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                     ParseFile userImage;
 
                     eventDescription = object.getString("eventContext");
+                    String eventLocation= object.getString("eventLocation");
                     userImage = object.getParseFile("eventPhoto");
                     String eventImageUrl = userImage.getUrl();
                     eventId = object.getObjectId();
@@ -147,7 +148,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
                                 }
 
-                                if (count ==1) {
+                                if (count == 1) {
 
                                     query2.findInBackground(new FindCallback<ParseObject>() {
                                         public void done(List<ParseObject> relationList, ParseException e) {
@@ -167,7 +168,6 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                                     });
 
 
-
                                 }
 
                             }
@@ -178,6 +178,9 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
                     TextView z = (TextView) view.findViewById(R.id.eventDescriptionText);
                     z.setText(eventDescription);
+
+                    TextView b = (TextView) view.findViewById(R.id.eventLocationText);
+                    b.setText(eventLocation);
 
                     ImageView i = (ImageView) view.findViewById((R.id.backdrop_lastevent));
                     Picasso.with(getContext().getApplicationContext()).load(eventImageUrl).

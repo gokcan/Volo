@@ -66,8 +66,6 @@ public class ProfileListFragment extends ListFragment implements View.OnClickLis
                 if (e == null) {
                     mParticipatedEvents= events;
 
-
-
                     ProfileListAdapter adapter = new ProfileListAdapter(getListView().getContext(), mParticipatedEvents);
                     setListAdapter(adapter);
 
