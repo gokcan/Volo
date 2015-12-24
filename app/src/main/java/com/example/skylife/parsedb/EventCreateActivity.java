@@ -52,6 +52,9 @@ public class EventCreateActivity extends AppCompatActivity {
     Uri imageUri;
     byte[] image;
 
+/* I will not use EventCreate page as a Activity
+*  Instead of using Activity, I will re-write the whole event creation logic with Fragments from zero.
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
