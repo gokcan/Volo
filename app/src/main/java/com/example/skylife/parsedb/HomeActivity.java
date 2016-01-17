@@ -1,6 +1,11 @@
 package com.example.skylife.parsedb;
 
 /*
+This class is deprecated! NOT ACTIVE ANYMORE!
+ */
+ 
+ 
+/*
 
 ||v1.0||
 ||Author: Gökcan DEĞİRMENCİ||
