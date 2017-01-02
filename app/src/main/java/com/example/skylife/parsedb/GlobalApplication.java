@@ -20,7 +20,10 @@ public class GlobalApplication extends Application {
         super.onCreate();
 
         Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "wZJ1Nx8n1wxsmED2LQQ7C4xtkbvSBlb26qzP4LPt", "5vEXptj6DwN5c2O9aqOCzAfnEKaPQfxJubB7yLpu");
+           /*
+        Dummy auth codes. Of course not real ones!
+        */
+        Parse.initialize(this, "xtkbvSBlb26qzP4LPt", "5vEXptj6DwN5c2O9xJubB7yLpu");
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
 
