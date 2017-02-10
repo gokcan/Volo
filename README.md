@@ -1,7 +1,7 @@
 # ProjectVolo
 Volo is a volunteering experience Android app with social media capabilities.
 
-![alt tag](https://degirmenci.me/volomockup.jpg)
+![alt tag](https://gokcandegirmenci.com/VoloLogo.png)
 
 # License 
 The MIT License (MIT)
