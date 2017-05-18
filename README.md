@@ -1,5 +1,6 @@
 # ProjectVolo :octocat:
-## Volo is a volunteering experience Android app with social media capabilities.
+
+Volo is a volunteering experience Android app with social media capabilities.
 
 ![alt tag](https://gokcandegirmenci.com/Volomock.png)
 
