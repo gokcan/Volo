@@ -1,8 +1,7 @@
-# ProjectVolo :octocat:
 
-Volo is a volunteering experience Android app with social media capabilities.
+![Volo logo](https://lh4.googleusercontent.com/FPnj5TC_6ZLi8Oxrd9XnZlIVBOpw0daQZaMUE7zE_RMbRa2ukKuMhtqKwwM0N0jODLdXzZBYSXvZg6tQRdlU=w2880-h1678)
 
-![alt tag](https://gokcandegirmenci.com/Volomock.png)
+### Volo is a volunteering experience Android app with social media capabilities.
 
 # License 
 The MIT License (MIT)
